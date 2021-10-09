@@ -9,9 +9,10 @@ import com.todo.service.TodoUtil;
 public class TodoMain {
 	
 	public static void start() {
-	
 		Scanner sc = new Scanner(System.in);
 		TodoList l = new TodoList();
+		l.importData("todolist.txt");
+		
 		boolean isList = false;
 		boolean quit = false;
 		TodoUtil.loadList(l, "todolist.txt");
@@ -40,45 +41,38 @@ public class TodoMain {
 				break;
 				
 			case "ls_cate":
-				TodoUtil.listCate(l);
+				TodoUtil.listCateAll(l);
 				break;
 
 			case "find":
-				String f = sc.nextLine().trim();
-				String f_remove = f.replace("find", "");
-				TodoUtil.findItem(l, f_remove);
+				String keyword = sc.nextLine().trim();
+				TodoUtil.findList(l, keyword);
 				break;
 				
 			case "find_cate":
-				String f_c = sc.nextLine().trim();
-				String f_Cremove = f_c.replace("find_cate", "");
-				TodoUtil.findCate(l, f_Cremove);
+				String cate = sc.nextLine().trim();
+				TodoUtil.findCateList(l,cate);
 				break;
 
-			case "ls_name_asc":
+			case "ls_name":
 				l.sortByName();
 				System.out.println("제목순으로 정렬하였습니다.");
-				isList = true;
+				TodoUtil.listAll(l,"title",1);
 				break;
 
 			case "ls_name_desc":
-				l.sortByName();
-				l.reverseList();
 				System.out.println("제목역순으로 정렬하였습니다.");
-				isList = true;
+				TodoUtil.listAll(l,"title",0);
 				break;
 				
 			case "ls_date":
-				l.sortByDate();
 				System.out.println("날짜순으로 정렬하였습니다.");
-				isList = true;
+				TodoUtil.listAll(l,"due_date",1);
 				break;
 				
 			case "ls_date_desc":
-				l.sortByDate();
-				l.reverseList();
 				System.out.println("날짜역순으로 정렬하였습니다.");
-				isList = true;
+				TodoUtil.listAll(l,"due_date",0);
 				break;
 				
 			case "help":
